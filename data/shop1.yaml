@@ -8,6 +8,8 @@ categories:
     name: Flash-накопители
   - id: 47
     name: Фотоаппараты
+  - id: 58
+    name: Вспышки
 
 goods:
   - id: 4216292
