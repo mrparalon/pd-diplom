@@ -26,13 +26,23 @@ def send_email(title, message, email):
 @shared_task
 def import_shop_data(data, user_id):
     shop, _ = Shop.objects.get_or_create(name=data['shop'], user_id=user_id)
+    category_list_created = []
     for category in data['categories']:
-        category_object, _ = Category.objects.get_or_create(id=category['id'], name=category['name'])
+        category_object, created = Category.objects.\
+                                   get_or_create(id=category['id'],
+                                                 name=category['name'])
         category_object.shops.add(shop.id)
-        category_object.save()
+        if created:
+            category_list_created.append(category_object)
+        else:
+            category_object.save()
+    if category_list_created:
+        Category.objects.bulk_create(category_list_created)
+
     ProductInfo.objects.filter(shop_id=shop.id).delete()
     for item in data['goods']:
-        product, _ = Product.objects.get_or_create(name=item['name'], category_id=item['category'])
+        product, _ = Product.objects.get_or_create(name=item['name'],
+                                                   category_id=item['category'])
 
         product_info = ProductInfo.objects.create(product_id=product.id,
                                                   external_id=item['id'],

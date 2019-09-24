@@ -6,6 +6,8 @@ categories:
     name: Аксессуары
   - id: 1
     name: Flash-накопители
+  - id: 47
+    name: Фотоаппараты
 
 goods:
   - id: 4216292
