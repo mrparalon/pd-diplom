@@ -28,18 +28,13 @@ def import_shop_data(data, user_id):
     shop, _ = Shop.objects.get_or_create(name=data['shop'], user_id=user_id)
     category_list_created = []
     for category in data['categories']:
-        category_object, created = Category.objects.\
-                                   get_or_create(id=category['id'],
-                                                 name=category['name'])
+        category_object, _ = Category.objects.get_or_create(id=category['id'],
+                                                            name=category['name'])
         category_object.shops.add(shop.id)
-        if created:
-            category_list_created.append(category_object)
-        else:
-            category_object.save()
-    if category_list_created:
-        Category.objects.bulk_create(category_list_created)
+        category_object.save()
 
     ProductInfo.objects.filter(shop_id=shop.id).delete()
+    parameter_object_list = []
     for item in data['goods']:
         product, _ = Product.objects.get_or_create(name=item['name'],
                                                    category_id=item['category'])
@@ -53,6 +48,9 @@ def import_shop_data(data, user_id):
                                                   shop_id=shop.id)
         for name, value in item['parameters'].items():
             parameter_object, _ = Parameter.objects.get_or_create(name=name)
-            ProductParameter.objects.create(product_info_id=product_info.id,
+            product_parameter_object = ProductParameter(
+                                            product_info_id=product_info.id,
                                             parameter_id=parameter_object.id,
                                             value=value)
+            parameter_object_list.append(product_parameter_object)
+    ProductParameter.objects.bulk_create(parameter_object_list)

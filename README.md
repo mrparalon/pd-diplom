@@ -45,6 +45,8 @@
     ./manage.py runserver 127.0.0.1:8000
     celery -A orders worker -l info
 
+## **OpenAPI schema**
+    https://www.getpostman.com/collections/5c1475e93803fb4f5af1
 
 
 # Дипломная работа к профессии Python-разработчик «API Сервис заказа товаров для розничных сетей».
