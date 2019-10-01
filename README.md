@@ -46,7 +46,7 @@
     celery -A orders worker -l info
 
 ## **OpenAPI schema**
-    https://www.getpostman.com/collections/5c1475e93803fb4f5af1
+    https://documenter.getpostman.com/view/8651115/SVtPXAoQ
 
 
 # Дипломная работа к профессии Python-разработчик «API Сервис заказа товаров для розничных сетей».

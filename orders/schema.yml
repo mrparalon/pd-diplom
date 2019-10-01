@@ -3,23 +3,6 @@ info:
   title: ''
   version: TODO
 paths:
-  /api/v1/partner/state:
-    get:
-      operationId: ListPartnerStates
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
-    post:
-      operationId: CreatePartnerState
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
   /api/v1/partner/orders:
     get:
       operationId: ListPartnerOrders
@@ -129,15 +112,6 @@ paths:
                     maxLength: 50
                   state:
                     type: boolean
-  /api/v1/products:
-    get:
-      operationId: ListProductInfos
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
   /api/v1/basket:
     get:
       operationId: ListBaskets
@@ -182,6 +156,32 @@ paths:
               schema: {}
     post:
       operationId: CreateOrder
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+  /api/v1/partner/state/:
+    get:
+      operationId: ListPartnerStates
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+    post:
+      operationId: createPartnerState
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+  /api/v1/products/:
+    get:
+      operationId: ListProductInfos
       parameters: []
       responses:
         '200':

@@ -12,6 +12,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ViewSet
 from ujson import loads as load_json
 from yaml import load as load_yaml, Loader
 
@@ -164,11 +165,12 @@ class ShopView(ListAPIView):
     serializer_class = ShopSerializer
 
 
-class ProductInfoView(APIView):
+class ProductInfoView(ViewSet):
     """
     Класс для поиска товаров
     """
-    def get(self, request, *args, **kwargs):
+
+    def list(self, request, *args, **kwargs):
 
         query = Q(shop__state=True)
         shop_id = request.query_params.get('shop_id')
@@ -315,13 +317,13 @@ class PartnerUpdate(APIView):
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 
 
-class PartnerState(APIView):
+class PartnerState(ViewSet):
     """
     Класс для работы со статусом поставщика
     """
 
     # получить текущий статус
-    def get(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
 
@@ -333,7 +335,7 @@ class PartnerState(APIView):
         return Response(serializer.data)
 
     # изменить текущий статус
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
 
